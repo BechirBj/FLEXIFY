@@ -9,7 +9,6 @@ import { Roles } from 'src/auth/Guard/roles.decorator';
 import { Role } from './entities/roles.enum';
 
 @Controller('users')
-@UseGuards(JwtAuthGuard)
 
 export class UsersController {
 
@@ -28,16 +27,22 @@ export class UsersController {
   }
   
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
+
   findById(@Param('id') id: string) {
     return this.usersService.findById(id);
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.UpdateUser(id, updateUserDto);
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+
   remove(@Param('id') id: string) {
     return this.usersService.deleteUser(id);
   }
