@@ -1,15 +1,8 @@
 // AuthContext.tsx
-import React, {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  useEffect,
-} from "react";
-import { useNavigate } from "react-router-dom";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface AuthContextType {
-  isAuthenticated: boolean | undefined;
+  isAuthenticated: boolean | undefined ;
   userRole: string | null;
   login: (role: string) => void;
   logout: () => void;
@@ -17,26 +10,26 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | undefined>(
-    localStorage.getItem("token") ? true : false
+    localStorage.getItem('token')?true : false,
   );
   const [userRole, setUserRole] = useState<string | null>(null);
+  const [navigate,setNavigator]=useState('')
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
-    if (token) {
+ 
+  useEffect(()=>{
+    const token = localStorage.getItem('token');
+    const role= localStorage.getItem('role');
+    if(token){
       setIsAuthenticated(true);
-      setUserRole(role); 
-    } else {
+      setUserRole(role);
+    }else{
       setIsAuthenticated(false);
       setUserRole(null);
     }
-  }, []);
-  
+  },[]);
+
 
   const login = (role: string) => {
     setIsAuthenticated(true);
@@ -59,7 +52,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };

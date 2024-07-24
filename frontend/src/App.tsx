@@ -16,6 +16,7 @@ import { AuthProvider } from './Routes/AuthContext';
 import AuthProtectedRoute from './Routes/AuthProtectedRoute';
 import AdminProtectedRoute from './Routes/AdminProtectedRoute';
 import Signup from './Pages/Signup';
+import APIS from './API/ENDPOINTS';
 
 const App: React.FC = () => {
   return (
@@ -28,8 +29,6 @@ const App: React.FC = () => {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-
-              {/* Auth Protected Routes */}
               <Route
                 path="/dashboard"
                 element={
@@ -78,17 +77,14 @@ const App: React.FC = () => {
                   </AuthProtectedRoute>
                 }
               />
-
-              {/* Admin Protected Routes */}
               <Route
                 path="/settings"
                 element={
-                  <AdminProtectedRoute>
+                  <AdminProtectedRoute role={[APIS.USER_ROLE]}>
                     <Settings />
                   </AdminProtectedRoute>
                 }
               />
-
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
