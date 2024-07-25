@@ -13,6 +13,6 @@ export class Workout {
   @ManyToOne(() => User, (user) => user.workouts, { eager: true })
   owner: User;
 
-  @OneToMany(() => Exercise, (exercise) => exercise.workout, { cascade: true })
+  @OneToMany(() => Exercise, (exercise) => exercise.workout, { cascade: ['insert', 'update'], onDelete: 'CASCADE' })
   exercises: Exercise[];
 }
