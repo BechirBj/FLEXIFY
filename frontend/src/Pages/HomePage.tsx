@@ -1,6 +1,10 @@
 import React from 'react';
+import { useAuth } from '../Routes/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
+
+  const { isAuthenticated } = useAuth();
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="bg-primary text-white py-20">
@@ -9,12 +13,12 @@ const Home: React.FC = () => {
           <p className="text-lg mb-8">
             Track your workouts, monitor progress, and achieve your fitness goals.
           </p>
-          <a
-            href="/signup"
+          <Link
+            to={isAuthenticated ? '/workouts' : '/login'}
             className="bg-white text-primary px-6 py-3 rounded-lg font-semibold transition duration-300 hover:bg-gray-200"
           >
             Get Started
-          </a>
+          </Link>
         </div>
       </div>
       <div className="container mx-auto px-4 py-16">

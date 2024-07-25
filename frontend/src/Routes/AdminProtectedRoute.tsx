@@ -3,19 +3,25 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { toast } from 'react-toastify';
 
-interface AdminProtectedRoute {
+interface AdminProtectedRouteProps {
   children: React.ReactElement;
   role: string[];
 }
 
-const AdminProtectedRoute: React.FC<AdminProtectedRoute> = ({ children, role }) => {
+const AdminProtectedRoute: React.FC<AdminProtectedRouteProps> = ({ children, role }) => {
   const { isAuthenticated, userRole } = useAuth();
-  useEffect(() => {
-    if (userRole !== "admin") {
-      toast.error("You must be admin");
+  const localStorageRole = localStorage.getItem("role");
+
+
+    if (localStorageRole && !role.includes(localStorageRole)) {
+    return <Navigate to="/" />;
     }
-  }, [userRole]);
-  return isAuthenticated && role.includes(userRole|| '')? children : <Navigate to="/" />;
+
+  if (!isAuthenticated || !localStorageRole || !role.includes(localStorageRole)) {
+    return <Navigate to="/settings" />;
+  }
+
+  return children;
 };
 
 export default AdminProtectedRoute;

@@ -2,12 +2,11 @@ const APIS = {
     USER_ROLE:"admin",
     LOGIN: "/auth/login",
     REGISTER: '/users',
-    DELETE_USER:"/users",
-    GET_ALL_USERS: '/users',
-    GET_ALL_INTERFACES:'interfaces',
-    GET_INTERFACE:'interfaces',
-    CREATE_INTERFACE:'interfaces',
-    DELETE_INTERFACE:'interfaces',
-    CHANGE_INTERFACE:'interfaces',
+    DELETE_USER:"/users",   
+    ADD_WORKOUT:"workout/CreateWorkout",
+    GET_ALL_WORKOUTS: '/workout/GetAll',
+    DELETE_WORKOUT: '/workout/RemoveWorkout',
+    UPDATE_WORKOUT: '/workout/UpdateWorkout',
+
 }
 export default APIS;

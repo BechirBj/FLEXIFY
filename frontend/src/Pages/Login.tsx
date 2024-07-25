@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { api } from '../API/API';
 import APIS from '../API/ENDPOINTS';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
+import { useAuth } from '../Routes/AuthContext';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { isAuthenticated } = useAuth();
   
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+
     event.preventDefault();
     const form = { email, password };
     
@@ -43,6 +47,13 @@ const Login: React.FC = () => {
       }    
     }
   };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(isAuthenticated){
+      navigate('/');
+      }
+  });
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
