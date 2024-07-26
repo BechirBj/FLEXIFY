@@ -1,4 +1,3 @@
-// src/pages/Exercises.tsx
 import React from 'react';
 
 const Exercises: React.FC = () => {
@@ -19,7 +18,6 @@ const Exercises: React.FC = () => {
             </div>
           </div>
         </div>
-        {/* Add Exercise Button */}
         <div className="mt-8">
           <button className="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300">
             Add Exercise
