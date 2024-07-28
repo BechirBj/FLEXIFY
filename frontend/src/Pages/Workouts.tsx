@@ -157,7 +157,6 @@ const Workouts: React.FC = () => {
   const handleViewDetails = (id: string, name: string) => {
     navigate("/Exercises", { state: { id, name } });
   };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-12">
