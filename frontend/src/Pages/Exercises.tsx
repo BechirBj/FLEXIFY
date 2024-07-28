@@ -28,7 +28,7 @@ const Exercises: React.FC = () => {
   const [exersiset, setexersiset] = useState<Exercise[]>([]);
 
   const [ExList, setExList] = useState<ExList[]>([]);
-  const [data,setData]= useState('')
+  const [data, setData] = useState("");
 
   const handleShowExList = async () => {
     const token = localStorage.getItem("token");
@@ -61,7 +61,9 @@ const Exercises: React.FC = () => {
   const [Exercises, setExercises] = useState<Exercise[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const [selectedExercises, setSelectedExercises] = useState<SelectedExercise[]>([]);
+  const [selectedExercises, setSelectedExercises] = useState<
+    SelectedExercise[]
+  >([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const toggleSelect = (id: string, name: string, muscle: string) => {
@@ -80,7 +82,7 @@ const Exercises: React.FC = () => {
     });
   };
 
-  const handleAdd = async (workoutId:string) => {
+  const handleAdd = async (workoutId: string) => {
     handleCloseModal();
     const token = localStorage.getItem("token");
     if (!token) {
@@ -104,12 +106,12 @@ const Exercises: React.FC = () => {
           toast.success("Exercises added successfully");
           setData(response.data);
         }
-      }catch (error) {
+      } catch (error) {
         setError("Failed to create workout");
-        toast.error("Can't create workout")
+        toast.error("Can't create workout");
       }
     }
-};
+  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -119,7 +121,6 @@ const Exercises: React.FC = () => {
     setIsModalOpen(false);
   };
 
-
   const handleShowExersiset = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -127,7 +128,9 @@ const Exercises: React.FC = () => {
       return;
     }
     try {
-      const response = await Private_api.get(`${APIS.GET_EXERCISES}/${workoutId}`);
+      const response = await Private_api.get(
+        `${APIS.GET_EXERCISES}/${workoutId}`
+      );
       if (response.status === 200) {
         setexersiset(response.data);
         handleShowExersiset();
@@ -147,7 +150,9 @@ const Exercises: React.FC = () => {
       return;
     }
     try {
-      const response = await Private_api.delete(`${APIS.DELETE_EXERCISE}/${id}`);
+      const response = await Private_api.delete(
+        `${APIS.DELETE_EXERCISE}/${id}`
+      );
       if (response.status === 200) {
         setexersiset((prev) => prev.filter((exerciset) => exerciset.id !== id));
         toast.success("Exercise Deleted successfully");
@@ -163,46 +168,49 @@ const Exercises: React.FC = () => {
         Exercise List {workoutName}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {exersiset.map((x) => (
-            <div
-              key={x.id}
-              className="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300"
-            >
-              <h3 className="text-xl font-semibold text-gray-700 mb-4">
-                Title: {x.name}
-              </h3>
-              <p className="text-sm text-gray-500">
-                <span className="font-medium text-gray-600">Muscle:</span>{" "}
-                {x.muscle}
-              </p>
-              <div className="flex gap-3">
-                <div className="mt-4">
+        {exersiset.map((x) => (
+          <div
+            key={x.id}
+            className="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300"
+          >
+            <h3 className="text-xl font-semibold text-gray-700 mb-4">
+              Title: {x.name}
+            </h3>
+            <p className="text-sm text-gray-500">
+              <span className="font-medium text-gray-600">Muscle:</span>{" "}
+              {x.muscle}
+            </p>
+            <div className="flex gap-3">
+              <div className="mt-4">
                 <button className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors duration-200">
-                View Details
-                  </button>
-                </div>
-                <div className="mt-4">
-                  <button onClick={() => handleDelete(x.id)} className="bg-red-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-red-400 transition-colors duration-200">
+                  View Details
+                </button>
+              </div>
+              <div className="mt-4">
+                <button
+                  onClick={() => handleDelete(x.id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-red-400 transition-colors duration-200"
+                >
+                  <div className="flex gap-4 items-center">
+                    Delete
+                    <MdDelete />
+                  </div>
+                </button>
+              </div>
+              <div className="mt-4">
+                <IconContext.Provider value={{ color: "black", className: "" }}>
+                  <button className="bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold hover:bg-yellow-600 transition-colors duration-200">
                     <div className="flex gap-4 items-center">
-                      Delete
-                      <MdDelete />
+                      Update the Title
+                      <FaEdit />
                     </div>
                   </button>
-                </div>
-                <div className="mt-4">
-                  <IconContext.Provider value={{ color: "black", className: "" }}>
-                    <button className="bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold hover:bg-yellow-600 transition-colors duration-200">
-                      <div className="flex gap-4 items-center">
-                        Update the Title
-                        <FaEdit />
-                      </div>
-                    </button>
-                  </IconContext.Provider>
-                </div>
+                </IconContext.Provider>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         {Exercises.map((workout) => (
           <div
@@ -298,7 +306,11 @@ const Exercises: React.FC = () => {
                           : "hover:bg-gray-50"
                       }`}
                       onClick={() =>
-                        toggleSelect(exercise.id, exercise.name, exercise.muscle)
+                        toggleSelect(
+                          exercise.id,
+                          exercise.name,
+                          exercise.muscle
+                        )
                       }
                     >
                       <td className="py-2 px-4">
@@ -336,7 +348,7 @@ const Exercises: React.FC = () => {
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded font-semibold hover:bg-blue-600 transition duration-200"
                 onClick={() => handleAdd(workoutId)}
-                >
+              >
                 Add Selected
               </button>
             </div>
