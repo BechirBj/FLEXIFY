@@ -16,7 +16,7 @@ import { Workout } from './entities/workout.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { IsOwnerGuard } from 'src/auth/Guard/owner.guard';
 
-@UseGuards(JwtAuthGuard,IsOwnerGuard)
+@UseGuards(JwtAuthGuard)
 @Controller('workout')
 export class WorkoutController {
   constructor(private readonly workoutService: WorkoutService) {}
@@ -40,6 +40,7 @@ export class WorkoutController {
     return this.workoutService.findOne(id);
   }
 
+  @UseGuards(IsOwnerGuard)
   @Patch('/UpdateWorkout/:id')
   update(
     @Param('id') id: string,
@@ -47,7 +48,7 @@ export class WorkoutController {
   ) {
     return this.workoutService.update(id, updateInterfaceDto);
   }
-
+  @UseGuards(IsOwnerGuard)
   @Delete('/RemoveWorkout/:id')
   remove(@Param('id') id: string) {
     return this.workoutService.remove(id);

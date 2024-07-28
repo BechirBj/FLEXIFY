@@ -26,8 +26,15 @@ export class ExerciseService {
     return this.exerciseRepository.save(newExercise);
   }
 
-  async findAll(): Promise<Exercise[]> {
-    return this.exerciseRepository.find();
+  async findAll(workoutId: string): Promise<Exercise[]> {
+    try {
+      return await this.exerciseRepository.find({
+        where: { workout: { id: workoutId } }, 
+      });
+    } catch (error) {
+      console.error('Error fetching exercises:', error);
+      throw new Error('Database query failed');
+    }
   }
 
  async findOne(id: string): Promise<Exercise> {

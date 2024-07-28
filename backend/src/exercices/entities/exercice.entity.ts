@@ -10,6 +10,9 @@ export class Exercise {
   @Column()
   name: string;
 
+  @Column()
+  muscle: string;
+
   @ManyToOne(() => Workout, (workout) => workout.exercises, { eager: true, onDelete: 'CASCADE' })
   workout: Workout;
 

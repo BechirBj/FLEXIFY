@@ -6,5 +6,10 @@ export class CreateExerciceDto {
     @IsString()
     @Length(3,20)
     name: string;
+    
+    @IsNotEmpty()
+    @IsString()
+    @Length(3,20)
+    muscle: string;
 
 }

@@ -11,6 +11,8 @@ import { SetsModule } from './sets/sets.module';
 import { Sets } from './sets/entities/set.entity';
 import { ExerciseModule } from './exercices/exercices.module';
 import { PassportModule } from '@nestjs/passport';
+import { ExlistModule } from './exlist/exlist.module';
+import { exlist } from './exlist/entities/exlist.entity';
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import { PassportModule } from '@nestjs/passport';
       username: 'postgres',
       password: 'admin',
       database: 'FLEXIFY',
-      entities: [User, Workout, Exercise, Sets],
+      entities: [User, Workout, Exercise, Sets, exlist],
       synchronize: true,
     }),
     AuthModule,
@@ -34,6 +36,7 @@ import { PassportModule } from '@nestjs/passport';
     UsersModule,
     ExerciseModule,
     SetsModule,
+    ExlistModule,
   ],
 })
 export class AppModule {}

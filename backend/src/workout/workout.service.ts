@@ -32,7 +32,7 @@ export class WorkoutService {
       where: { id },
     });
     if (!interfacee) {
-      throw new NotFoundException(`interfacee with ID ${id} not found`);
+      throw new NotFoundException(`Workout with ID ${id} not found`);
     }
     return interfacee;
   }
@@ -46,7 +46,7 @@ export class WorkoutService {
       relations: ['owner'],
     });
     if (!interfacee) {
-      throw new NotFoundException(`Interface with ID ${id} not found`);
+      throw new NotFoundException(`Workout with ID ${id} not found`);
     }
     const updatedWorkout = this.workoutRepository.merge(
       interfacee,
@@ -58,7 +58,7 @@ export class WorkoutService {
   async remove(id: string): Promise<string> {
     const result: DeleteResult = await this.workoutRepository.delete(id);
     if (result.affected === 0) {
-      throw new NotFoundException(`Interface with ID ${id} not found`);
+      throw new NotFoundException(`Workout with ID ${id} not found`);
     }
     return 'Deleted successfully';
   }
