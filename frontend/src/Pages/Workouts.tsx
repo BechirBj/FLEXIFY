@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { IconContext } from "react-icons";
+import { useNavigate } from "react-router-dom";
 
 interface Workout {
   id: string;
@@ -15,6 +16,9 @@ interface Workout {
 }
 
 const Workouts: React.FC = () => {
+  const navigate = useNavigate();
+  const [data,setData]= useState('')
+
   const [Workout, setWorkout] = useState<Workout[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [newWorkoutTitle, setNewWorkoutTitle] = useState<string>("");
@@ -85,6 +89,8 @@ const Workouts: React.FC = () => {
       const response = await Private_api.post(APIS.ADD_WORKOUT, TX);
       if (response.status === 201) {
         toast.success("Workout Created successfully");
+        setData(response.data);
+
         handleCloseModal();
         handleShowWorkouts();
       } else {
@@ -143,6 +149,11 @@ const Workouts: React.FC = () => {
     }
   };
 
+  const handleViewDetails = (id: string,name:string) => {
+    navigate("/Exercises", { state: { id ,name} });
+  };
+
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-12">
@@ -165,8 +176,8 @@ const Workouts: React.FC = () => {
               </p>
               <div className="flex gap-3">
                 <div className="mt-4">
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors duration-200">
-                    View Details
+                <button onClick={() => handleViewDetails(x.id,x.name)} className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors duration-200">
+                View Details
                   </button>
                 </div>
                 <div className="mt-4">
@@ -227,7 +238,6 @@ const Workouts: React.FC = () => {
             </div>
           </div>
         )}
-
         {updateModalOpen && (
           <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-8 rounded-lg shadow-lg w-11/12 max-w-md">

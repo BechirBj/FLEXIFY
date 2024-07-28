@@ -23,7 +23,7 @@ Private_api.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/LoginPage';
+      window.location.href = '/';
     }
     if( error.response.status===403 ){
       toast.error("Access Denied")
