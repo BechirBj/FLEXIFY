@@ -17,7 +17,7 @@ interface Workout {
 
 const Workouts: React.FC = () => {
   const navigate = useNavigate();
-  const [data,setData]= useState('')
+  const [data, setData] = useState("");
 
   const [Workout, setWorkout] = useState<Workout[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -131,12 +131,17 @@ const Workouts: React.FC = () => {
     };
 
     try {
-      const response = await Private_api.patch(`${APIS.UPDATE_WORKOUT}/${editingId}`, TX);
+      const response = await Private_api.patch(
+        `${APIS.UPDATE_WORKOUT}/${editingId}`,
+        TX
+      );
       if (response.status === 200) {
         toast.success("Workout title updated successfully");
         setWorkout((prev) =>
           prev.map((workout) =>
-            workout.id === editingId ? { ...workout, name: newWorkoutTitle } : workout
+            workout.id === editingId
+              ? { ...workout, name: newWorkoutTitle }
+              : workout
           )
         );
         handleCloseUpdateModal();
@@ -149,10 +154,9 @@ const Workouts: React.FC = () => {
     }
   };
 
-  const handleViewDetails = (id: string,name:string) => {
-    navigate("/Exercises", { state: { id ,name} });
+  const handleViewDetails = (id: string, name: string) => {
+    navigate("/Exercises", { state: { id, name } });
   };
-
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -176,12 +180,18 @@ const Workouts: React.FC = () => {
               </p>
               <div className="flex gap-3">
                 <div className="mt-4">
-                <button onClick={() => handleViewDetails(x.id,x.name)} className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors duration-200">
-                View Details
+                  <button
+                    onClick={() => handleViewDetails(x.id, x.name)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors duration-200"
+                  >
+                    View Details
                   </button>
                 </div>
                 <div className="mt-4">
-                  <button onClick={() => handleDelete(x.id)} className="bg-red-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-red-400 transition-colors duration-200">
+                  <button
+                    onClick={() => handleDelete(x.id)}
+                    className="bg-red-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-red-400 transition-colors duration-200"
+                  >
                     <div className="flex gap-4 items-center">
                       Delete
                       <MdDelete />
@@ -189,8 +199,13 @@ const Workouts: React.FC = () => {
                   </button>
                 </div>
                 <div className="mt-4">
-                  <IconContext.Provider value={{ color: "black", className: "" }}>
-                    <button onClick={() => handleOpenUpdateModal(x.id, x.name)} className="bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold hover:bg-yellow-600 transition-colors duration-200">
+                  <IconContext.Provider
+                    value={{ color: "black", className: "" }}
+                  >
+                    <button
+                      onClick={() => handleOpenUpdateModal(x.id, x.name)}
+                      className="bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold hover:bg-yellow-600 transition-colors duration-200"
+                    >
                       <div className="flex gap-4 items-center">
                         Update the Title
                         <FaEdit />

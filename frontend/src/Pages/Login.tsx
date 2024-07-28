@@ -1,35 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { api } from '../API/API';
-import APIS from '../API/ENDPOINTS';
-import { AxiosError } from 'axios';
-import { toast } from 'react-toastify';
-import { useAuth } from '../Routes/AuthContext';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { api } from "../API/API";
+import APIS from "../API/ENDPOINTS";
+import { AxiosError } from "axios";
+import { toast } from "react-toastify";
+import { useAuth } from "../Routes/AuthContext";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { isAuthenticated } = useAuth();
-  
-  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
 
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = { email, password };
-    
+
     try {
       const response = await api.post(APIS.LOGIN, form);
       if (response.status === 201) {
         console.log(response.data);
-        const { access_token, role ,sub} = response.data;
-        localStorage.setItem('token', access_token); 
-        localStorage.setItem('sub', sub);
-        localStorage.setItem('role', role);
+        const { access_token, role, sub } = response.data;
+        localStorage.setItem("token", access_token);
+        localStorage.setItem("sub", sub);
+        localStorage.setItem("role", role);
         toast.success("Login successful");
         console.log(response.data);
         window.location.href = "/";
       }
     } catch (error) {
-      if (error instanceof AxiosError) { 
+      if (error instanceof AxiosError) {
         if (error.response) {
           const { data } = error.response;
           if (error.response.status === 401 && data.message) {
@@ -44,15 +43,15 @@ const Login: React.FC = () => {
           console.error("Error fetching data:", error.message);
           toast.error("Error occurred while registering");
         }
-      }    
+      }
     }
   };
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(isAuthenticated){
-      navigate('/');
-      }
+    if (isAuthenticated) {
+      navigate("/");
+    }
   });
 
   return (
@@ -88,7 +87,10 @@ const Login: React.FC = () => {
           </button>
         </form>
         <div className="mt-4 text-center">
-          <a href="/forgot-password" className="text-sm text-blue-500 hover:underline">
+          <a
+            href="/forgot-password"
+            className="text-sm text-blue-500 hover:underline"
+          >
             Forgot Password?
           </a>
         </div>
