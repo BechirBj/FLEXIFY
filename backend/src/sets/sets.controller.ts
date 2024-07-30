@@ -1,14 +1,16 @@
-import { Controller, Get, Post, Body, Param, Put, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Query, UseGuards, Patch } from '@nestjs/common';
 import { CreateSetDto } from './dto/create-set.dto';
 import { UpdateSetDto } from './dto/update-set.dto';
 import { SetService } from './sets.service';
 import { Sets } from './entities/set.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+@UseGuards(JwtAuthGuard)
 
 @Controller('sets')
 export class SetController {
   constructor(private readonly setService: SetService) {}
 
-  @Post(':exerciseId')
+  @Post('/AddSets/:exerciseId')
   async create(
     @Param('exerciseId') exerciseId: string,
     @Body() createSetDto: CreateSetDto,
@@ -16,7 +18,7 @@ export class SetController {
     return this.setService.create(createSetDto, exerciseId);
   }
 
-  @Get()
+  @Get('/GetAll')
   async findAll(@Query('exerciseId') exerciseId?: string): Promise<Sets[]> {
     return this.setService.findAll(exerciseId);
   }
@@ -26,7 +28,7 @@ export class SetController {
     return this.setService.findOne(id);
   }
 
-  @Put(':id')
+  @Patch('/UpdateSet/:id')
   async update(
     @Param('id') id: string,
     @Body() updateSetDto: UpdateSetDto,
@@ -34,7 +36,7 @@ export class SetController {
     return this.setService.update(id, updateSetDto);
   }
 
-  @Delete(':id')
+  @Delete('/RemoveSet/:id')
   async remove(@Param('id') id: string): Promise<void> {
     return this.setService.remove(id);
   }
