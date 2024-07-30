@@ -62,6 +62,14 @@ const App: React.FC = () => {
                 }
               />
               <Route
+                path="/WorkoutDetails"
+                element={
+                  <AuthProtectedRoute>
+                    <WorkoutDetails />
+                  </AuthProtectedRoute>
+                }
+              />
+              <Route
                 path="/profile"
                 element={
                   <AuthProtectedRoute>

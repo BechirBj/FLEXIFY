@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Private_api } from "../API/API";
 import APIS from "../API/ENDPOINTS";
-import { useLocation } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MdDelete } from "react-icons/md";
-import { IconContext } from "react-icons";
-import { FaEdit } from "react-icons/fa";
-
 interface Exercise {
   id: string;
   name: string;
@@ -162,6 +159,10 @@ const Exercises: React.FC = () => {
     }
   };
 
+  const navigate = useNavigate();
+  const handleViewDetails = (id: string, name: string) => {
+    navigate("/WorkoutDetails", { state: { id, name } });
+  };
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-3xl font-bold text-center mb-8">
@@ -182,7 +183,9 @@ const Exercises: React.FC = () => {
             </p>
             <div className="flex gap-3">
               <div className="mt-4">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors duration-200">
+                <button 
+                onClick={() => handleViewDetails(x.id, x.name)}
+                className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors duration-200">
                   View Details
                 </button>
               </div>
@@ -196,16 +199,6 @@ const Exercises: React.FC = () => {
                     <MdDelete />
                   </div>
                 </button>
-              </div>
-              <div className="mt-4">
-                <IconContext.Provider value={{ color: "black", className: "" }}>
-                  <button className="bg-yellow-500 text-black px-4 py-2 rounded-full font-semibold hover:bg-yellow-600 transition-colors duration-200">
-                    <div className="flex gap-4 items-center">
-                      Update the Title
-                      <FaEdit />
-                    </div>
-                  </button>
-                </IconContext.Provider>
               </div>
             </div>
           </div>

@@ -1,26 +1,95 @@
 // src/pages/WorkoutDetails.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { MdDelete } from 'react-icons/md';
+import { useLocation } from 'react-router-dom';
+import { Private_api } from '../API/API';
+import APIS from '../API/ENDPOINTS';
+
+interface Sets{
+  id: string;
+  exerciseId: string;
+  serie: number;
+  reps: number;
+  kg: number;
+}
+
 
 const WorkoutDetails: React.FC = () => {
+  const location = useLocation();
+  const workoutId = location.state?.id;
+  const workoutName = location.state?.name;
+  const [exersiset, setexersiset] = useState<Sets[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleShowSets = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setError("No token found");
+      return;
+    }
+    try {
+      const response = await Private_api.get(
+        `${APIS.GET_EXERCISES}/${workoutId}`
+      );
+      if (response.status === 200) {
+        setexersiset(response.data);
+        handleShowSets();
+      } else {
+        setError("Failed to fetch data");
+      }
+    } catch (error) {
+      setError("Error fetching data");
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(()=>
+  {
+    handleShowSets();
+  })
+ 
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto px-4 py-8">
-        <h2 className="text-2xl font-bold mb-6">Workout Details</h2>
+        <h2 className="text-2xl font-bold mb-6">Adding Exercise Details</h2>
 
         {/* Exercise List */}
-        <div className="bg-white p-6 shadow-md rounded-lg mb-8">
-          <h3 className="text-xl font-bold mb-4">Exercises</h3>
-          <ul className="space-y-4">
-            <li className="border-b pb-4">
-              <h4 className="font-semibold">Exercise Name</h4>
-              <p>Sets: 3</p>
-              <p>Reps: 10</p>
-              <p>Weight: 50 kg</p>
-              <p>Notes: Keep back straight</p>
-            </li>
-            {/* Repeat for other exercises */}
-          </ul>
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {exersiset.map((x) => (
+          <div
+            key={x.serie}
+            className="bg-white p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300"
+          >
+            <h3 className="text-xl font-semibold text-gray-700 mb-4">
+              Title: {x.exerciseId}
+            </h3>
+            <p className="text-sm text-gray-500">
+              <span className="font-medium text-gray-600">Muscle:</span>{" "}
+              {x.kg}
+            </p>
+            <div className="flex gap-3">
+              <div className="mt-4">
+                <button 
+                // onClick={() => handleViewDetails(x.id, x.name)}
+                className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-600 transition-colors duration-200">
+                  View Details
+                </button>
+              </div>
+              <div className="mt-4">
+                <button
+                  // onClick={() => handleDelete(x.id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-red-400 transition-colors duration-200"
+                >
+                  <div className="flex gap-4 items-center">
+                    Delete
+                    <MdDelete />
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
         {/* Buttons */}
         <div className="flex space-x-4">

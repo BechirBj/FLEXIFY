@@ -16,11 +16,13 @@ const APIS = {
     DELETE_EXERCISE: '/exercices/DeleteExercise',
     UPDATE_EXERCISE: '/exercises/UpdateExercise',
 
+    GET_EXLIST :'/exlist/GetAll',
 
 
-
-
-    GET_EXLIST :'/exlist/GetAll'
+    ADD_SET :'/sets/AddSets',
+    GET_SET :'/sets/GetAll',
+    UPDATE_SET :'/sets/UpdateSet',
+    REMOVE_SET :'/sets/RemoveSet'
 
 }
 export default APIS;

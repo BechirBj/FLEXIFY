@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../Routes/AuthContext';
-import { toast } from 'react-toastify';
 
 const Navbar: React.FC = () => {
   const { isAuthenticated, logout } = useAuth();
@@ -23,11 +22,6 @@ const Navbar: React.FC = () => {
             <li>
               <Link to="/workouts" className="hover:underline">
                 Workouts
-              </Link>
-            </li>
-            <li>
-              <Link to="/exercises" className="hover:underline">
-                Exercises
               </Link>
             </li>
             <li>
