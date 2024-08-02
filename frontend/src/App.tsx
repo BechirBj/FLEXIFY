@@ -88,7 +88,7 @@ const App: React.FC = () => {
               <Route
                 path="/settings"
                 element={
-                  <AdminProtectedRoute role={[APIS.USER_ROLE]}>
+                  <AdminProtectedRoute role={[APIS.ADMIN_ROLE]}>
                     <Settings />
                   </AdminProtectedRoute>
                 }
