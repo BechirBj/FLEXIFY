@@ -25,6 +25,16 @@ export class SetService {
     });
     return this.setRepository.save(newSet);
   }
+  async updateSet(id: string, updateSetDto: UpdateSetDto): Promise<Sets> {
+    const set = await this.setRepository.findOne({ where: { id } });
+
+    if (!set) {
+      throw new NotFoundException('Set not found');
+    }
+
+    Object.assign(set, updateSetDto);
+    return this.setRepository.save(set);
+  }
 
   async findAll(exerciseId?: string): Promise<Sets[]> {
     if (exerciseId) {

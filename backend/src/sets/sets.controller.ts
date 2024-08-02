@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Put, Delete, Query, UseGuards, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Query, UseGuards, Patch, NotFoundException } from '@nestjs/common';
 import { CreateSetDto } from './dto/create-set.dto';
 import { UpdateSetDto } from './dto/update-set.dto';
 import { SetService } from './sets.service';
@@ -28,12 +28,20 @@ export class SetController {
     return this.setService.findOne(id);
   }
 
-  @Patch('/UpdateSet/:id')
-  async update(
+
+  @Put('/UpdateSet/:id')
+  async updateSet(
     @Param('id') id: string,
     @Body() updateSetDto: UpdateSetDto,
   ): Promise<Sets> {
-    return this.setService.update(id, updateSetDto);
+    try {
+      return await this.setService.updateSet(id, updateSetDto);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new Error('Failed to update set');
+    }
   }
 
   @Delete('/RemoveSet/:id')

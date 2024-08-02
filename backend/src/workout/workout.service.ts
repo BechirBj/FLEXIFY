@@ -62,4 +62,17 @@ export class WorkoutService {
     }
     return 'Deleted successfully';
   }
+  async findByOwnerId(ownerid: string): Promise<Workout[]> {
+    const interfaces = await this.workoutRepository.find({
+      where: { owner: { id: ownerid } },
+      relations: ['owner'],
+    });
+    if (!interfaces || interfaces.length === 0) {
+      throw new NotFoundException(
+        `No interfaces found for owner with ID ${ownerid}`,
+      );
+    }
+    return interfaces;
+  }
+  
 }
