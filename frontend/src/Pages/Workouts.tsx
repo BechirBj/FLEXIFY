@@ -25,20 +25,19 @@ const Workouts: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [updateModalOpen, setUpdateModalOpen] = useState<boolean>(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-
+  
   const handleShowWorkouts = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
       setError("No token found");
       return;
     }
-
     try {
       const response = await Private_api.get(APIS.GET_ALL_WORKOUTS);
       if (response.status === 200) {
         setWorkout(response.data);
       } else {
-        setError("Failed to fetch data");
+        setError("Failed to fetch users");
       }
     } catch (error) {
       setError("Error fetching data");
@@ -286,3 +285,7 @@ const Workouts: React.FC = () => {
 };
 
 export default Workouts;
+function setLoading(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
+
