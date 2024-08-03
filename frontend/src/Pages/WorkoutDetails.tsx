@@ -27,10 +27,12 @@ const WorkoutDetails: React.FC = () => {
       setError("No token found");
       return;
     }
+    console.log(ExerciseId)
+  
     try {
-      const response = await Private_api.get(APIS.GET_SET);
+      const response = await Private_api.get(`/sets/GetByExerciseId/${ExerciseId}`);
       if (response.status === 200) {
-        const setsData = response.data.map((set: any) => ({
+        const setsData = response.data.map((set:any) => ({
           id: set.id,
           serie: set.serie || 1,
           reps: set.reps || 0,
@@ -45,6 +47,7 @@ const WorkoutDetails: React.FC = () => {
       console.error("Error fetching data:", error);
     }
   };
+  
 
   const addSet = () => {
     setSets((prevSets) => [
@@ -77,6 +80,7 @@ const WorkoutDetails: React.FC = () => {
         );
         if (response.status === 200 || response.status === 204) {
           toast.success("Set deleted successfully !");
+
         } else {
           throw new Error("Failed to delete set");
         }
