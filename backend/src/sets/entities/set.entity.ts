@@ -15,6 +15,6 @@ export class Sets {
   @Column()
   reps: number;
 
- @ManyToOne(() => Exercise, (exercise) => exercise.sets)
+ @ManyToOne(() => Exercise, (exercise) => exercise.sets, { cascade: ['insert', 'update'], onDelete: 'CASCADE' })
   exercice: Exercise;
 }

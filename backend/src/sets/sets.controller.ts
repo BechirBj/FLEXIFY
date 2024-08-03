@@ -4,6 +4,7 @@ import { UpdateSetDto } from './dto/update-set.dto';
 import { SetService } from './sets.service';
 import { Sets } from './entities/set.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { GetUser } from 'src/Decorator/getUser.decorator';
 @UseGuards(JwtAuthGuard)
 
 @Controller('sets')
@@ -21,6 +22,26 @@ export class SetController {
   @Get('/GetAll')
   async findAll(@Query('exerciseId') exerciseId?: string): Promise<Sets[]> {
     return this.setService.findAll(exerciseId);
+  }
+
+  @Get('/GetByExerciseId/:exerciseId')
+  async findByExerciseId(
+    @Param('exerciseId') exerciseId: string,
+  ): Promise<Sets[]> {
+    const sets = await this.setService.findByExerciseId(exerciseId);
+    if (!sets || sets.length === 0) {
+      throw new NotFoundException(`No sets found for exercise ID ${exerciseId}`);
+    }
+    return sets;
+  }
+
+  @Get('/GetBySetId/:setId')
+  async findBySetId(@Param('setId') setId: string): Promise<Sets> {
+    const set = await this.setService.findBySetId(setId);
+    if (!set) {
+      throw new NotFoundException(`Set with ID ${setId} not found`);
+    }
+    return set;
   }
 
   @Get(':id')

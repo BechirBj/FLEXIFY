@@ -45,12 +45,27 @@ export class SetService {
     }
     return this.setRepository.find({ relations: ['exercice'] });
   }
+  async findByExerciseId(exerciseId: string): Promise<Sets[]> {
+    return this.setRepository.find({
+      where: { exercice: { id: exerciseId } },
+      relations: ['exercice'],
+    });
+  }
+
+  async findBySetId(setId: string): Promise<Sets> {
+    const set = await this.setRepository.findOne({ where: { id: setId } });
+    if (!set) {
+      throw new NotFoundException(`Set with ID ${setId} not found`);
+    }
+    return set;
+  }
+
 
   async findOne(id: string): Promise<Sets> {
     const set = await this.setRepository.findOne({
-      where: { id },
+      where: { exercice: { id: id } },
       relations: ['exercice'],
-    });
+  });
     if (!set) {
       throw new NotFoundException(`Set with ID ${id} not found`);
     }
@@ -69,7 +84,13 @@ export class SetService {
   }
 
   async remove(id: string): Promise<void> {
-    const set = await this.findOne(id);
+    const set = await this.setRepository.findOne({ where: { id } });
+  
+    if (!set) {
+      throw new NotFoundException(`Set with ID ${id} not found`);
+    }
+  
     await this.setRepository.remove(set);
   }
+  
 }
