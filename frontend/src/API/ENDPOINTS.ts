@@ -22,6 +22,7 @@ const APIS = {
 
     ADD_SET :'/sets/AddSets',
     GET_SET :'/sets/GetAll',
+    GET_SET_ID  : '/sets/GetByExerciseId',
     UPDATE_SET :'/sets/UpdateSet',
     REMOVE_SET :'/sets/RemoveSet'
 
