@@ -10,10 +10,10 @@ import { Roles } from 'src/auth/Guard/roles.decorator';
 
 @Controller('exlist')
 @UseGuards(JwtAuthGuard,RolesGuard)
-@Roles(Role.ADMIN)
 export class ExlistController {
   constructor(private readonly exlistService: ExlistService) {}
-
+  
+  @Roles(Role.ADMIN)
   @Post('/AddExercise')
   async create(
     @Body() createExerciseDto: CreateExlistDto
@@ -30,7 +30,7 @@ export class ExlistController {
   async findOne(@Param('id') id: string): Promise<exlist> {
     return this.exlistService.findOne(id);
   }
-
+  @Roles(Role.ADMIN)
   @Patch('/UpdateExercise/:id')
   async update(
     @Param('id') id: string,
@@ -38,7 +38,7 @@ export class ExlistController {
   ): Promise<exlist> {
     return this.exlistService.update(id, updateExerciseDto);
   }
-
+  @Roles(Role.ADMIN)
   @Delete('/DeleteExercise/:id')
   async remove(@Param('id') id: string): Promise<void> {
     return this.exlistService.remove(id);
