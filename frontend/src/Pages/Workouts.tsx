@@ -25,7 +25,7 @@ const Workouts: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [updateModalOpen, setUpdateModalOpen] = useState<boolean>(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  
+
   const handleShowWorkouts = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -288,4 +288,3 @@ export default Workouts;
 function setLoading(arg0: boolean) {
   throw new Error("Function not implemented.");
 }
-

@@ -1,4 +1,3 @@
-// src/pages/Profile.tsx
 import React from 'react';
 
 const Profile: React.FC = () => {
@@ -7,7 +6,6 @@ const Profile: React.FC = () => {
       <div className="container mx-auto px-4 py-8">
         <h2 className="text-2xl font-bold mb-6">Profile</h2>
 
-        {/* Profile Information */}
         <div className="bg-white p-6 shadow-md rounded-lg mb-8">
           <h3 className="text-xl font-bold mb-4">Profile Information</h3>
           <div className="space-y-4">
@@ -20,13 +18,11 @@ const Profile: React.FC = () => {
           </div>
         </div>
 
-        {/* Goals and Preferences */}
         <div className="bg-white p-6 shadow-md rounded-lg mb-8">
           <h3 className="text-xl font-bold mb-4">Goals and Preferences</h3>
           <p>Set your fitness goals and app preferences here.</p>
         </div>
 
-        {/* Logout Button */}
         <button className="bg-red-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-600 transition duration-300">
           Logout
         </button>

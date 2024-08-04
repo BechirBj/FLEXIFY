@@ -37,7 +37,6 @@ const Dashboard: React.FC = () => {
             </nav>
           </div>
           <div className="flex-grow p-4">
-            {/* Quick Stats */}
             <div className="mb-8">
               <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
